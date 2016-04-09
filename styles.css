@@ -28,3 +28,47 @@
 #dist {
 	margin-right: 20px;
 }
+
+.HUD .bar_container {
+	width: 300px;
+	height: 50px;
+	border: solid black 2px;
+	border-radius: 25px;
+	overflow: hidden;
+}
+
+.HUD  tr:last-child > td:last-child {
+	text-align: center;
+}
+
+.HUD div[class $='bar']  {
+	position: relative;
+	width: 100%;
+	height: 100%;
+}
+
+body > .HUD:last-of-type {
+	position: absolute;
+	right: 95px;
+}
+
+table[class='HUD'] {
+	display: inline-block;
+}
+
+.info {
+	font-size: 25px;
+	font-weight: 700;
+}
+
+.health_bar {
+	background: red;
+}
+
+.energy_bar {
+	background: blue;
+}
+
+.stamina_bar {
+	background: green;
+}

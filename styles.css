@@ -1,0 +1,8 @@
+#animation_container {
+	border: solid 2px;
+	height: 400px;
+	width: 900px;
+	display: inline-block;
+	background-image: url(Images/bg.jpg);
+	background-size: 900px 400px;
+}

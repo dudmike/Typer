@@ -72,3 +72,33 @@ table[class='HUD'] {
 .stamina_bar {
 	background: green;
 }
+
+#player1 {
+	position: absolute;
+	border-radius: 50%;
+	width: 100px;
+	height: 100px;
+	overflow: hidden;
+	background-image: url(Images/barbarian.jpg);
+	background-size: 100px 100px;
+	top: 300px;
+	left: 10px;
+	z-index: 2;
+	transition: left .5s;
+
+}
+
+#player2 {
+	position: absolute;
+	border-radius: 50%;
+	width: 100px;
+	height: 100px;
+	overflow: hidden;
+	background-image: url(Images/barbarian.jpg);
+	background-size: 100px 100px;
+	transform: rotateY(-180deg);
+	transition: left .5s;
+	top: 300px;
+	left: 810px;
+	z-index: 2;
+}

@@ -49,49 +49,48 @@ Hero.prototype.heal = function() {
 			}, 10000)
 			self.heal_enabled = 0;
 		} else this.eventObj.heal = 'It\'s reloading...';
-		
-	 	
+			 	
+}
+
+Hero.prototype.changeHUD = function(tbl_row, dmg, max_val, property) {
+	if(!gameStatus) return;
+	var bar = tbl_row.querySelector('div[class $="bar"]');
+	if(me.health <=0 || enemy.health <=0) {
+		bar.style.width = '0%';
+		tbl_row.querySelector('div[class="num"]').innerHTML = 0;			
+	} else {
+		var percentage =   property*100/ max_val;
+		bar.style.width = percentage + '%';
+		tbl_row.querySelector('div[class="num"]').innerHTML = Math.round(property);
 	}
 
-	Hero.prototype.changeHUD = function(tbl_row, dmg, max_val, property) {
-		if(!gameStatus) return;
-		var bar = tbl_row.querySelector('div[class $="bar"]');
-		if(me.health <=0 || enemy.health <=0) {
-			bar.style.width = '0%';
-			tbl_row.querySelector('div[class="num"]').innerHTML = 0;			
+	if(this ==  me) {
+		if(property < 0) {
+			tbl_row.querySelector('div[class="animated"]').innerHTML = '-' + (dmg + property);
 		} else {
-			var percentage =   property*100/ max_val;
-			bar.style.width = percentage + '%';
-			tbl_row.querySelector('div[class="num"]').innerHTML = Math.round(property);
+
+			tbl_row.querySelector('div[class="animated"]').innerHTML = '-' + dmg;
 		}
-
-		if(this ==  me) {
-			if(property < 0) {
-				tbl_row.querySelector('div[class="animated"]').innerHTML = '-' + (dmg + property);
-			} else {
-
-				tbl_row.querySelector('div[class="animated"]').innerHTML = '-' + dmg;
-			}
-		}
-		
-		
-		this.animate(function(timePassed) {
-			tbl_row.querySelector('div[class="animated"]').style.opacity = (2000  -  timePassed)/1000 + '';
-		}, 2000)
 	}
+	
+	
+	this.animate(function(timePassed) {
+		tbl_row.querySelector('div[class="animated"]').style.opacity = (2000  -  timePassed)/1000 + '';
+	}, 2000)
+}
 
-	Hero.prototype.animate = function(draw, duration) {
-		var start = performance.now();
+Hero.prototype.animate = function(draw, duration) {
+	var start = performance.now();
 
-		requestAnimationFrame(function animate(time) {
-			var timePassed = time - start;
+	requestAnimationFrame(function animate(time) {
+		var timePassed = time - start;
 
-			if(timePassed > duration) timePassed = duration;
-			draw(timePassed);
+		if(timePassed > duration) timePassed = duration;
+		draw(timePassed);
 
-			if(timePassed < duration) {
-				requestAnimationFrame(animate);
-			}	
-		});
-	}
+		if(timePassed < duration) {
+			requestAnimationFrame(animate);
+		}	
+	});
+}
 

@@ -1,0 +1,104 @@
+#animation_container {
+	border: solid 2px;
+	height: 400px;
+	width: 900px;
+	display: inline-block;
+	background-image: url(Images/bg.jpg);
+	background-size: 900px 400px;
+}
+#log_container {
+	width: 400px;
+	height: 400px;
+	border: 2px grey inset;
+	display: inline-block;
+}
+
+#input {
+	width: 400px;
+	font-size: 15px;
+}
+
+#status_container  img {
+	margin: 10px 0px 10px 0px;
+	width: 40px;
+	height: 40px;
+	vertical-align: middle;
+}
+
+#dist {
+	margin-right: 20px;
+}
+
+.HUD .bar_container {
+	width: 300px;
+	height: 50px;
+	border: solid black 2px;
+	border-radius: 25px;
+	overflow: hidden;
+}
+
+.HUD  tr:last-child > td:last-child {
+	text-align: center;
+}
+
+.HUD div[class $='bar']  {
+	position: relative;
+	width: 100%;
+	height: 100%;
+}
+
+body > .HUD:last-of-type {
+	position: absolute;
+	right: 95px;
+}
+
+table[class='HUD'] {
+	display: inline-block;
+}
+
+.info {
+	font-size: 25px;
+	font-weight: 700;
+}
+
+.health_bar {
+	background: red;
+}
+
+.energy_bar {
+	background: blue;
+}
+
+.stamina_bar {
+	background: green;
+}
+
+#player1 {
+	position: absolute;
+	border-radius: 50%;
+	width: 100px;
+	height: 100px;
+	overflow: hidden;
+	background-image: url(Images/barbarian.jpg);
+	background-size: 100px 100px;
+	top: 300px;
+	left: 10px;
+	z-index: 2;
+	transition: left .5s;
+
+}
+
+#player2 {
+	position: absolute;
+	border-radius: 50%;
+	width: 100px;
+	height: 100px;
+	overflow: hidden;
+	background-image: url(Images/barbarian.jpg);
+	background-size: 100px 100px;
+	transform: rotateY(-180deg);
+	transition: left .5s;
+	top: 300px;
+	left: 810px;
+	z-index: 2;
+}

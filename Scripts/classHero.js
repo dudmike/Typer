@@ -105,7 +105,7 @@ Hero.prototype.positionChange = function(changeVal) {
 
 	var attackWidth = this.attackWidth(),
 		player1_left = this.getCoords(player1).left,
-		player2_left = this.getCoords(player2).left
+		player2_left = this.getCoords(player2).left,
 		player1_start_position = this.player1_start_position,
 		player2_start_position = this.player2_start_position,
 		difference = attackWidth - player1.offsetWidth,
@@ -120,7 +120,7 @@ Hero.prototype.positionChange = function(changeVal) {
 		var position = player1_left + attackWidth  + changeVal;
 
 		if(position >= parseInt(player2.style.left) ) {
-			player1.style.left = (parseInt(player2.style.left)- attackWidth) + 'px';//bers
+			player1.style.left = (parseInt(player2.style.left)- attackWidth) + 'px';
 		} else if(player1_left + changeVal < parseInt(player1_start_position)) {
 			
 			if(difference >= 2 * step) {
@@ -138,14 +138,12 @@ Hero.prototype.positionChange = function(changeVal) {
 		else {
 			player1.style.left = player1_left + changeVal + 'px';
 		}
-
 		
 	} else {
 		var position = player2_left - changeVal;
 		if(position <= parseInt(player1.style.left) + attackWidth) {
-			player2.style.left = (parseInt(player1.style.left) + attackWidth) + 'px';//bers
+			player2.style.left = (parseInt(player1.style.left) + attackWidth) + 'px';
 		} else if(player2_left - changeVal > parseInt(player2_start_position)) {
-
 			
 			if(difference > 2 * step) {
 				
@@ -182,18 +180,34 @@ Hero.prototype.dash = function() {
 	distance--;
 	this.showDistance();
 	this.stamina -= this.dash_stamina_cost;
-
-
 	var table_row;
 	(this == me) ? table_row = document.querySelectorAll('.HUD')[0].rows[2]:
 	table_row = document.querySelectorAll('.HUD')[1].rows[2];				
-	this.hud_changer(table_row, this.dash_stamina_cost, this.maxstamina, this.stamina);
+	this.changeHUD(table_row, this.dash_stamina_cost, this.maxstamina, this.stamina);
 
 	if(distance < 1) {
 		distance = 1;
 		this.showDistance();
 	}
 	this.positionChange(514);
+}
+
+Hero.prototype.run = function() {
+	distance++;
+	distance++;
+	this.showDistance();
+	this.stamina -= this.run_stamina_cost;
+	var table_row;
+	(this == me) ? table_row = document.querySelectorAll('.HUD')[0].rows[2]:
+	table_row = document.querySelectorAll('.HUD')[1].rows[2];				
+	this.hud_changer(table_row, 25, this.maxstamina, this.stamina);
+	this.positionChange(-514);
+}
+
+Hero.prototype.back = function() {
+	distance++;
+	this.showDistance();
+	this.positionChange(-257);
 }
 
 

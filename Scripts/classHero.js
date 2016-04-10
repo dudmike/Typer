@@ -210,5 +210,106 @@ Hero.prototype.back = function() {
 	this.positionChange(-257);
 }
 
+Hero.prototype.regeneration = function() {
+	if(gameStatus != 1) return;
+
+	var self = this;
+	var current_val_array = [self.health, self.energy, self.stamina];
+	var max_val_array = [self.maxhealth, self.maxenergy, self.maxstamina];
+
+	for(var i=0; i<current_val_array.length; i++) {
+		if(current_val_array[i] >= max_val_array[i]) continue;
+
+		var table;
+		self == me? table = document.querySelectorAll('.HUD')[0]:
+		table = document.querySelectorAll('.HUD')[1];
+
+		current_val_array[i] += max_val_array[i]*5/100;
+		i==0? self.health = current_val_array[i]: i==1? self.energy = current_val_array[i]:
+		self.stamina = current_val_array[i];
+		
+		var percentage = current_val_array[i]*100/max_val_array[i];
+		table.rows[i].querySelector('div[class $="bar"]').style.width = percentage + '%';
+		table.querySelectorAll('div[class="num"]')[i].innerHTML = Math.round(current_val_array[i]);
+		if(current_val_array[i] > max_val_array[i]) {
+			table.querySelectorAll('div[class="num"]')[i].innerHTML = max_val_array[i];
+			i==0? self.health = max_val_array[i]: i==1? self.energy = max_val_array[i]:
+			self.stamina = max_val_array[i];
+		}
+	}
+	
+}
+
+Hero.prototype.end = function() {
+	var button = document.createElement('button');
+	
+	button.innerHTML = 'Start new';
+	
+	button.addEventListener('click', function() {
+		clearInterval(regMe);
+		clearInterval(regEnemy);
+		gameStatus = 1;
+		distance = 4;
+ 		me = new Barbarian();
+		enemy = new Barbarian();
+		log_container.innerHTML = '';
+		var bars = document.querySelectorAll('div[class $="bar"]');
+		for(var i=0; i<bars.length; i++) {
+			bars[i].style.width= '100%';
+		}
+
+		var dist = document.getElementById('dist');
+		dist.innerHTML = 'Distance: ' + '<b style="font-size:25px">' + distance + '</b>';
+		var divs = document.querySelectorAll('.num');
+		var arr = [me.maxhealth, me.maxenergy, me.maxstamina, enemy.maxhealth, enemy.maxenergy, enemy.maxstamina];
+		for(var i=0; i<arr.length/2; i++) {
+			divs[i].innerHTML = arr[i];
+		}
+
+		for(var i=3; i<arr.length; i++) {
+			divs[i].innerHTML = arr[i];
+		}
+		 regMe = setInterval(me.regeneration.bind(me), 5000);
+		 regEnemy = setInterval(enemy.regeneration.bind(enemy), 5000);
+
+		 player1.style.left = me.player1_start_position;
+		 player2.style.left = enemy.player2_start_position;
+
+		 me.reloadPlacer();
+		document.body.removeChild(document.querySelector('.endBlock'));
+		
+	});
+	
+	var abilities = document.querySelectorAll('.ability');
+	if(enemy.health <= 0) {
+		var div = document.createElement('div');
+		div.style.bottom = '200px';
+		div.style.right =window.innerWidth/2 + 'px';
+		div.innerHTML = 'Victory<br>';
+		div.setAttribute('class', 'endBlock');
+		div.appendChild(button);
+		document.body.insertBefore(div, animation_container);
+		this.eventObj.end = 'Passionately swinging with your sword,  you win this battle';
+		this.showEvent(this.eventObj.end);
+		
+		for(var i=0; i<abilities.length; i++) {
+			document.body.removeChild(abilities[i]);
+		}
+		gameStatus = 0;
+		 
+	} else if(me.health <=0) {
+		var div = endPlacer();
+		div.innerHTML = 'Defeat<br>';
+		div.setAttribute('class', 'endBlock');
+		div.appendChild(button);
+		document.body.insertBefore(div, animation_container);
+		this.eventObj.end = 'You were good, but destiny is cruel...';
+		this.showEvent(this.eventObj.end);
+		for(var i=0; i<abilities.length; i++) {
+			document.body.removeChild(abilities[i]);
+		}
+		gameStatus = 0;	
+	}
+}
 
 

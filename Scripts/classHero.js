@@ -1,7 +1,7 @@
 //----------Hero class start-----------
 function Hero() {
 	this.player1_start_position = '10px';
-	this.player2_start_position = '810px';
+	this.player2_start_position = '910px';
 	this.heal_energy_cost = 25;
 	this.heal_cooldown = 10000;
 	this.dash_stamina_cost = 50;
@@ -100,6 +100,7 @@ Hero.prototype.getCoords = function(elem) {
 
 Hero.prototype.positionChange = function(changeVal) {
 	if(distance >= 4 && changeVal > 0) return;
+
 	var player2 = document.getElementById('player2');
 	var player1 = document.getElementById('player1');
 
@@ -108,8 +109,8 @@ Hero.prototype.positionChange = function(changeVal) {
 		player2_left = this.getCoords(player2).left,
 		player1_start_position = this.player1_start_position,
 		player2_start_position = this.player2_start_position,
-		difference = attackWidth - player1.offsetWidth,
-		step = (animation_container.clientWidth - attackWidth)/ 3;
+		difference = player2_left - player1_left,
+		step = (animation_container.clientWidth - attackWidth - player1.offsetWidth)/ 3;
 
 	if(player1.style.left== '' && player2.style.left == '')	{
 		player1.style.left = player1_start_position;
@@ -118,7 +119,6 @@ Hero.prototype.positionChange = function(changeVal) {
 		
 	if(this == me) {		
 		var position = player1_left + attackWidth  + changeVal;
-
 		if(position >= parseInt(player2.style.left) ) {
 			player1.style.left = (parseInt(player2.style.left)- attackWidth) + 'px';
 		} else if(player1_left + changeVal < parseInt(player1_start_position)) {
@@ -126,21 +126,21 @@ Hero.prototype.positionChange = function(changeVal) {
 			if(difference >= 2 * step) {
 				player1.style.left = player1_start_position;
 			} else {
-
 				player1.style.left = (parseInt(player2_start_position)  - difference + changeVal) + 'px';
 				player2.style.left = player2_start_position;	
 			}
 			
 		} else if(distance == 3 && changeVal > 0) {
-			player1.style.left = (player1_left + step) + 'px';
+			player1.style.left = step + 10 + 'px';
 		} 
 
 		else {
-			player1.style.left = player1_left + changeVal + 'px';
+			player1.style.left = player1_left  + changeVal + 'px';
 		}
 		
 	} else {
 		var position = player2_left - changeVal;
+
 		if(position <= parseInt(player1.style.left) + attackWidth) {
 			player2.style.left = (parseInt(player1.style.left) + attackWidth) + 'px';
 		} else if(player2_left - changeVal > parseInt(player2_start_position)) {
@@ -153,16 +153,18 @@ Hero.prototype.positionChange = function(changeVal) {
 				player2.style.left = (parseInt(player1_start_position) + difference - changeVal) + 'px';
 				player1.style.left = player1_start_position;
 			}
-		} else if(distance == 3 && changeVal < 0) {
-
-			player2.style.left = (player2_left - step) + 'px';
+		} else if(distance == 3 && changeVal > 0) {
+			
+			player2.style.left =  parseInt(player2_start_position)-step + 'px';
 		}
 
 		else {
+			
 			player2.style.left = player2_left - changeVal + 'px';
 		}
 	}
-
+	
+	
 }
 
 Hero.prototype.walk = function() {	
@@ -386,7 +388,7 @@ Hero.prototype.strLoader = function(str) {
 
 	case 'heal':
 	me.heal();
-	this.showEvent(eventObj.heal);
+	this.showEvent(this.eventObj.heal);
 	break;
 
 	case 'walk':

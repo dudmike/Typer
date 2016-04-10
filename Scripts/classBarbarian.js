@@ -104,6 +104,7 @@ Barbarian.prototype.berserk = function() {
 		if(this == me) {
 			if(this.energy == this.berserk_energy_cost) {
 				distance = 1;
+				
 				this.showDistance();
 				enemy.health -= this.berserk_damage;
 				this.energy -= this.berserk_energy_cost;
@@ -139,6 +140,7 @@ Barbarian.prototype.berserk = function() {
 		} else {
 			if(this.energy == this.berserk_energy_cost) {
 				distance = 1;
+				
 				this.showDistance();
 				me.health -= this.berserk_damage;
 				this.energy -= this.berserk_energy_cost;

@@ -18,3 +18,81 @@ function Barbarian() {
 }
 Barbarian.prototype = Object.create(Hero.prototype);
 Barbarian.prototype.constructor = Barbarian;
+
+Barbarian.prototype.attack = function() {
+	if(!gameStatus) return;
+	if(this.stamina >= this.attack_stamina_cost) {
+		if(this.attack_enabled) {
+			this.attackRender();
+			if(this == me) {
+				this.animate(function(timePassed) {
+					return me.reload_changer(timePassed, 0, me.attack_cooldown);
+				}, this.attack_cooldown)
+			}
+
+			this.animate(function(timePassed) {
+				document.querySelector('.attack_animation_block:last-child').style.height = timePassed/4 + 'px';
+				document.querySelector('.attack_animation_block:last-child').style.opacity = (1000 - timePassed)/1000 + '';
+			}, 1000)
+			this.stamina -= this.attack_stamina_cost;
+			var table_row;
+			(this == me)?table_row = document.querySelectorAll('.HUD')[0].rows[2]:
+			table_row = document.querySelectorAll('.HUD')[1].rows[2];				
+			this.hud_changer(table_row, this.attack_stamina_cost, this.maxstamina, this.stamina);
+			
+			if(distance == 1) {
+				if(this == enemy) {
+					me.health -= me.attack_damage;
+					if(me.health < 0) {
+						this.eventObj.attack = 'Enemy hit you with his sword, you got worse by: '+
+					'<span style="color:#f00;font-family:Verdana;font-size:20px">'+
+					(this.attack_damage+ me.health)+'</span> points';
+					} else {
+						this.eventObj.attack = 'Enemy hit you with his sword, you got worse by: '+
+					'<span style="color:#f00;font-family:Verdana;font-size:20px">'+
+					this.attack_damage+'</span> points';
+					}
+					
+					var table_row = document.querySelectorAll('.HUD')[0].rows[0];	
+					this.showEvent(this.eventObj.attack);					
+					this.hud_changer(table_row, this.attack_damage, me.maxhealth, me.health);						
+					this.end();
+				
+				} else {
+					enemy.health -= enemy.attack_damage;
+					if(enemy.health < 0) {
+						this.eventObj.attack = 'You hit enemy with your sword, he got worse by: '+
+					'<span style="color:#f00;font-family:Verdana;font-size:20px">'+
+					(this.attack_damage+ enemy.health)+'</span> points';
+				} else {
+						this.eventObj.attack = 'You hit enemy with your sword, he got worse by: '+ 
+					'<span style="color:#AA0cff;font-family:Verdana;font-size:20px">'+
+					this.attack_damage+'</span> points';
+				}
+					var table_row = document.querySelectorAll('.HUD')[1].rows[0];
+					this.hud_changer(table_row, this.attack_damage, enemy.maxhealth, enemy.health);
+				
+					this.showEvent(this.eventObj.attack);
+					this.end();
+				
+				}
+			
+				
+			} else {
+				this.eventObj.attack = 'In the rage, you dissected emptiness';
+				this.showEvent(this.eventObj.attack);
+			}
+
+			
+			var self = this;
+			setTimeout(function () {self.attack_enabled = 1}, self.attack_cooldown);
+			self.attack_enabled = 0;
+		} else {
+			this.eventObj.attack = 'You can\'t attack faster';
+			this.showEvent(this.eventObj.attack);
+		}
+	} else {
+		this.eventObj.attack = 'Your stamina is low';
+		this.showEvent(this.eventObj.attack);
+	}
+}

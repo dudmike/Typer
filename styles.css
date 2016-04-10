@@ -1,13 +1,13 @@
 #animation_container {
 	border: solid 2px;
 	height: 400px;
-	width: 900px;
+	width: 1000px;
 	display: inline-block;
 	background-image: url(Images/bg.jpg);
-	background-size: 900px 400px;
+	background-size: 1000px 400px;
 }
 #log_container {
-	width: 400px;
+	width: 300px;
 	height: 400px;
 	border: 2px grey inset;
 	display: inline-block;
@@ -99,7 +99,7 @@ table[class='HUD'] {
 	transform: rotateY(-180deg);
 	transition: left .5s;
 	top: 300px;
-	left: 810px;
+	left: 910px;
 	z-index: 2;
 }
 

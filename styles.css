@@ -108,3 +108,31 @@ table[class='HUD'] {
 	position: absolute;
 	text-align: center;
 }
+
+.ability {
+	width: 40px;
+	height: 0px;
+	opacity: .5;
+	position: absolute;
+	background: blue;
+}
+
+.attack_animation_block {
+	overflow: hidden;
+	width: 129px;
+	height: 0px;
+	position: absolute;
+	top: 300px;
+
+}
+
+.attack_animation_render {
+	width: 129px;
+	height: 100px;
+	border-radius: 50%;
+	background: white;
+}
+
+#log_container {
+	overflow: auto;
+}

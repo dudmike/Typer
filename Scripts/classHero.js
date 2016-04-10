@@ -312,4 +312,60 @@ Hero.prototype.end = function() {
 	}
 }
 
+Hero.prototype.reloadPlacer = function() {
+	var currentImg = document.body.querySelectorAll('div[id="status_container"] img');
+
+	for(var i=0; i< currentImg.length; i++) {
+		var div = document.createElement('div');
+		div.setAttribute('class', 'ability');
+		div.style.left = this.getCoords(currentImg[i]).left + 'px';
+		div.style.top = this.getCoords(currentImg[i]).top + 'px';
+		document.body.appendChild(div);
+	}
+}
+
+Hero.prototype.attackRender = function() {
+	var parentDiv = document.createElement('div');
+	var whiteDiv = document.createElement('div');
+	whiteDiv.setAttribute('class', 'attack_animation_render');
+	parentDiv.appendChild(whiteDiv);
+	if(this == me) {
+		var player1 = this.getCoords(document.getElementById('player1'));
+		parentDiv.style.left = player1.left + 'px';
+
+	} else {
+		var player2= this.getCoords(document.getElementById('player2'));
+		parentDiv.style.left = (player2.left - (this.attackWidth() - document.getElementById('player1').offsetWidth) )  + 'px';
+	}		
+	
+	parentDiv.setAttribute('class', 'attack_animation_block');
+	document.body.appendChild(parentDiv);
+	if(document.querySelectorAll('.attack_animation_block').length == 2) {
+		document.body.removeChild(document.querySelectorAll('.attack_animation_block')[0]);
+	}
+}
+
+Hero.prototype.reload_changer = function(time, index, duration) {
+	var Img = document.body.querySelectorAll('div[id="status_container"] img')[index];
+	var reloader = document.querySelectorAll('.ability')[index];
+	var difference = Img.offsetHeight - reloader.offsetHeight;
+	reloader.style.top = this.getCoords(Img).top+ difference + window.pageYOffset + 'px';
+	var delimiter = duration/Img.offsetHeight;
+	reloader.style.height =  (duration - time)/delimiter + 'px';
+}
+
+Hero.prototype.showDistance = function() {
+	var p = document.getElementById('dist');
+	p.innerHTML = 'Distance: ' + '<b style="font-size:25px">'+ distance +'</b>' ;
+}
+
+Hero.prototype.showEvent = function(prop) {
+	if(!gameStatus) return;
+	var text = prop;
+	var p = document.createElement('p');
+	p.innerHTML = text;
+	log_container.appendChild(p);
+	log_container.scrollTop = log_container.scrollHeight;
+}
+
 

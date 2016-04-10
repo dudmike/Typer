@@ -102,3 +102,9 @@ table[class='HUD'] {
 	left: 810px;
 	z-index: 2;
 }
+
+.endBlock {
+	font-size: 30px;
+	position: absolute;
+	text-align: center;
+}

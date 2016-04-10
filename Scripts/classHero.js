@@ -368,4 +368,52 @@ Hero.prototype.showEvent = function(prop) {
 	log_container.scrollTop = log_container.scrollHeight;
 }
 
+Hero.prototype.inputClear = function() {
+	input.value = '';
+}
+
+Hero.prototype.strLoader = function(str) {
+	switch(str) {
+	case 'berserk':
+	me.berserk();
+	break;
+
+	case 'run':
+	return me.run()
+
+	case 'dash':
+	return me.dash()
+
+	case 'heal':
+	me.heal();
+	this.showEvent(eventObj.heal);
+	break;
+
+	case 'walk':
+	return me.walk()
+
+	case 'back':
+	return me.back()
+
+	case 'attack':
+	 me.attack(); 
+	 break;
+
+	default: 
+	 me.inputClear();
+	}	
+}
+
+Hero.prototype.attackWidth = function() {
+	var div = document.createElement('div');
+	div.setAttribute('class', 'attack_animation_render');
+	div.style.height = '0px';
+	div.style.visibility = 'hidden';
+	document.body.appendChild(div);
+	var Width = document.querySelector('.attack_animation_render').offsetWidth;
+	document.body.removeChild(document.body.lastChild);
+	return Width;
+}
+
+
 

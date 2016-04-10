@@ -21,7 +21,7 @@ Hero.prototype.heal = function() {
 			var table_row;
 			(this == me) ? table_row = document.querySelectorAll('.HUD')[0].rows[1]:
 			table_row = document.querySelectorAll('.HUD')[1].rows[1];				
-			this.changeHUD(table_row, this.heal_energy_cost, this.maxenergy, this.energy);
+			this.hud_changer(table_row, this.heal_energy_cost, this.maxenergy, this.energy);
 			
 			var hp = this.maxhealth - this.health;
 			this.eventObj.heal = 
@@ -52,7 +52,7 @@ Hero.prototype.heal = function() {
 			 	
 }
 
-Hero.prototype.changeHUD = function(tbl_row, dmg, max_val, property) {
+Hero.prototype.hud_changer = function(tbl_row, dmg, max_val, property) {
 	if(!gameStatus) return;
 	var bar = tbl_row.querySelector('div[class $="bar"]');
 	if(me.health <=0 || enemy.health <=0) {
@@ -183,7 +183,7 @@ Hero.prototype.dash = function() {
 	var table_row;
 	(this == me) ? table_row = document.querySelectorAll('.HUD')[0].rows[2]:
 	table_row = document.querySelectorAll('.HUD')[1].rows[2];				
-	this.changeHUD(table_row, this.dash_stamina_cost, this.maxstamina, this.stamina);
+	this.hud_changer(table_row, this.dash_stamina_cost, this.maxstamina, this.stamina);
 
 	if(distance < 1) {
 		distance = 1;
@@ -200,7 +200,7 @@ Hero.prototype.run = function() {
 	var table_row;
 	(this == me) ? table_row = document.querySelectorAll('.HUD')[0].rows[2]:
 	table_row = document.querySelectorAll('.HUD')[1].rows[2];				
-	this.changeHUD(table_row, 25, this.maxstamina, this.stamina);
+	this.hud_changer(table_row, 25, this.maxstamina, this.stamina);
 	this.positionChange(-514);
 }
 

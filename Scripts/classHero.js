@@ -200,7 +200,7 @@ Hero.prototype.run = function() {
 	var table_row;
 	(this == me) ? table_row = document.querySelectorAll('.HUD')[0].rows[2]:
 	table_row = document.querySelectorAll('.HUD')[1].rows[2];				
-	this.hud_changer(table_row, 25, this.maxstamina, this.stamina);
+	this.changeHUD(table_row, 25, this.maxstamina, this.stamina);
 	this.positionChange(-514);
 }
 

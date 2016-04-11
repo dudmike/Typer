@@ -417,5 +417,13 @@ Hero.prototype.attackWidth = function() {
 	return Width;
 }
 
+Hero.prototype.getIntegerRandom = function(max) {
+	return Math.floor(Math.random() * (max+1) );
+}
+
+Hero.prototype.getTimeRandom = function(min, max) {
+	return min + Math.random() *(max-min);
+}
+
 
 

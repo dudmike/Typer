@@ -112,7 +112,7 @@ Hero.prototype.positionChange = function(changeVal) {
 		difference = player2_left - player1_left,
 		step = (animation_container.clientWidth - attackWidth - player1.offsetWidth)/ 3;
 
-	if(player1.style.left== '' && player2.style.left == '' || distance == 4)	{
+	if(player1.style.left== '' && player2.style.left == '' || distance ==4)	{
 		player1.style.left = player1_start_position;
 		player2.style.left = player2_start_position;
 	}
@@ -135,7 +135,12 @@ Hero.prototype.positionChange = function(changeVal) {
 		} 
 
 		else {
-			player1.style.left = player1_left  + changeVal + 'px';
+			if(distance ==4) {
+				player1.style.left = player1_start_position;
+			} else {
+				player1.style.left = parseInt(player1.style.left)  + changeVal + 'px';
+			}
+			
 		}
 		
 	} else {
@@ -149,18 +154,23 @@ Hero.prototype.positionChange = function(changeVal) {
 				
 				player2.style.left = player2_start_position;
 			} else {
-
+				
 				player2.style.left = (parseInt(player1_start_position) + difference - changeVal) + 'px';
 				player1.style.left = player1_start_position;
 			}
 		} else if(distance == 3 && changeVal > 0) {
-			
+		
 			player2.style.left =  parseInt(player2_start_position)-step + 'px';
 		}
 
 		else {
 			
-			player2.style.left = player2_left - changeVal + 'px';
+			if(distance == 4 ) {
+				player2.style.left = player2_start_position;
+			} else {
+				player2.style.left = parseInt(player2.style.left) - changeVal + 'px';
+			}
+			
 		}
 	}
 	
@@ -300,7 +310,9 @@ Hero.prototype.end = function() {
 		gameStatus = 0;
 		 
 	} else if(me.health <=0) {
-		var div = endPlacer();
+		var div = document.createElement('div');
+		div.style.bottom = '200px';
+		div.style.right =window.innerWidth/2 + 'px';
 		div.innerHTML = 'Defeat<br>';
 		div.setAttribute('class', 'endBlock');
 		div.appendChild(button);

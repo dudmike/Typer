@@ -18,7 +18,7 @@ elem.onkeydown = function(event) {
 }
 
 var dist = document.getElementById('dist');
-dist.innerHTML = 'Distance: ' + '<b style="font-size:25px">' + distance + '</b>';
+dist.innerHTML = '<b style="font-size:25px">' + distance + '</b>';
 var divs = document.querySelectorAll('.num');
 var arr = [me.maxhealth, me.maxenergy, me.maxstamina, enemy.maxhealth, enemy.maxenergy, enemy.maxstamina];
 for(var i=0; i<arr.length/2; i++) {

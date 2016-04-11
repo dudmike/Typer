@@ -15,6 +15,7 @@ function Barbarian() {
 	this.berserk_enabled = 1;
 	this.berserk_energy_cost = 50;
 	this.berserk_damage = 25;
+	this.commands = [];
 }
 Barbarian.prototype = Object.create(Hero.prototype);
 Barbarian.prototype.constructor = Barbarian;
@@ -168,5 +169,48 @@ Barbarian.prototype.berserk = function() {
 		this.eventObj.berserk ='You can\'t use it so often';
 		this.showEvent(this.eventObj.berserk);
 	}
-	
+
+}
+
+Barbarian.prototype.bot = function() {
+	var time = enemy.getTimeRandom(1000, 3000);
+	var self = this;
+
+	setTimeout(function () {
+		self.commands = [enemy.walk.bind(enemy), enemy.back.bind(enemy)];
+		self.commands[enemy.getIntegerRandom(self.commands.length- 1)]();
+	}, time)
+
+	if(gameStatus == 1) {		
+		setTimeout(self.bot.bind(self), time);
+	}
+}
+
+Barbarian.prototype.react_on_danger = function() {
+	setInterval(function() {
+		if(enemy.health <= enemy.maxhealth * 30/100 ) {
+			if(enemy.heal_enabled && enemy.stamina >= this.run_stamina_cost) {
+				this.commands=[enemy.heal.bind(enemy),enemy.heal.bind(enemy),enemy.run.bind(enemy),
+				enemy.run.bind(enemy),enemy.heal.bind(enemy)];
+				this.commands[enemy.getIntegerRandom(this.commands.length-1)]();
+			} else if(!enemy.heal_enabled && enemy.stamina >= run_stamina_cost){
+				this.commands=[enemy.run.bind(enemy), enemy.run.bind(enemy),enemy.back.bind(enemy)];
+				this.commands[enemy.getIntegerRandom(this.commands.length-1)]();
+			} else {
+				enemy.heal.bind(enemy);
+			}
+			
+		} else {
+			if(distance ==1) {
+				if(enemy.attack_enabled ) {
+					this.commands = [enemy.attack.bind(enemy),enemy.back.bind(enemy), enemy.attack.bind(enemy)];
+					this.commands[enemy.getIntegerRandom(this.commands.length-1)]();	
+				} else {
+					enemy.back.bind(enemy);
+				}
+				
+			}
+		}
+		
+	}, 2000)
 }

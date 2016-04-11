@@ -40,5 +40,6 @@ enemy.react_on_danger = function() {
 	}, 2000)
 }
 
-//enemy.react_on_danger();
+enemy.react_on_danger();
 enemy.bot();
+

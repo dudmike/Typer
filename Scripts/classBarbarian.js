@@ -78,7 +78,7 @@ Barbarian.prototype.attack = function() {
 				}
 			
 				
-			} else {
+			} else if(this==me){
 				this.eventObj.attack = 'In the rage, you dissected emptiness';
 				this.showEvent(this.eventObj.attack);
 			}
@@ -87,11 +87,11 @@ Barbarian.prototype.attack = function() {
 			var self = this;
 			setTimeout(function () {self.attack_enabled = 1}, self.attack_cooldown);
 			self.attack_enabled = 0;
-		} else {
+		} else if(this==me) {
 			this.eventObj.attack = 'You can\'t attack faster';
 			this.showEvent(this.eventObj.attack);
 		}
-	} else {
+	} else if(this==me){
 		this.eventObj.attack = 'Your stamina is low';
 		this.showEvent(this.eventObj.attack);
 	}

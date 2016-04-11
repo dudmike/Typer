@@ -370,7 +370,7 @@ Hero.prototype.reload_changer = function(time, index, duration) {
 
 Hero.prototype.showDistance = function() {
 	var p = document.getElementById('dist');
-	p.innerHTML = 'Distance: ' + '<b style="font-size:25px">'+ distance +'</b>' ;
+	p.innerHTML ='<b style="font-size:25px">'+ distance +'</b>' ;
 }
 
 Hero.prototype.showEvent = function(prop) {

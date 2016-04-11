@@ -30,3 +30,5 @@ for(var i=3; i<arr.length; i++) {
 }
 
 me.reloadPlacer();
+enemy.react_on_danger();
+enemy.bot();

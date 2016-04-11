@@ -112,7 +112,7 @@ Hero.prototype.positionChange = function(changeVal) {
 		difference = player2_left - player1_left,
 		step = (animation_container.clientWidth - attackWidth - player1.offsetWidth)/ 3;
 
-	if(player1.style.left== '' && player2.style.left == '')	{
+	if(player1.style.left== '' && player2.style.left == '' || distance == 4)	{
 		player1.style.left = player1_start_position;
 		player2.style.left = player2_start_position;
 	}

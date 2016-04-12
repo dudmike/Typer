@@ -17,41 +17,48 @@ function Barbarian() {
 	this.berserk_damage = 25;
 	this.commands = [];
 }
-Barbarian.prototype = Object.create(Hero.prototype);
-Barbarian.prototype.constructor = Barbarian;
+Barbarian.prototype = Object.create(Hero.prototype);//Inheritance
+Barbarian.prototype.constructor = Barbarian;//Save constructor
 
 Barbarian.prototype.attack = function() {
 	if(!gameStatus) return;
+
 	if(this.stamina >= this.attack_stamina_cost) {
+
 		if(this.attack_enabled) {
 			this.setAttackBlock();
+
 			if(this == me) {
+				//Run cooldown animation
 				this.animate(function(timePassed) {
 					return me.reload_changer(timePassed, 0, me.attack_cooldown);
 				}, this.attack_cooldown)
 			}
-
+			//Attack animation 
 			this.animate(function(timePassed) {
 				document.querySelector('.attack_animation_block:last-child').style.height = timePassed/4 + 'px';
 				document.querySelector('.attack_animation_block:last-child').style.opacity = (1000 - timePassed)/1000 + '';
 			}, 1000)
 			this.stamina -= this.attack_stamina_cost;
+			//Select HUD table row
 			var table_row;
 			(this == me)?table_row = document.querySelectorAll('.HUD')[0].rows[2]:
 			table_row = document.querySelectorAll('.HUD')[1].rows[2];				
 			this.hud_changer(table_row, this.attack_stamina_cost, this.maxstamina, this.stamina);
 			
 			if(distance == 1) {
+
 				if(this == enemy) {
 					me.health -= me.attack_damage;
+
 					if(me.health < 0) {
 						this.eventObj.attack = 'Enemy hit you with his sword, you got worse by: '+
-					'<span style="color:#f00;font-family:Verdana;font-size:20px">'+
-					(this.attack_damage+ me.health)+'</span> points';
+						'<span style="color:#f00;font-family:Verdana;font-size:20px">'+
+						(this.attack_damage+ me.health)+'</span> points';
 					} else {
 						this.eventObj.attack = 'Enemy hit you with his sword, you got worse by: '+
-					'<span style="color:#f00;font-family:Verdana;font-size:20px">'+
-					this.attack_damage+'</span> points';
+						'<span style="color:#f00;font-family:Verdana;font-size:20px">'+
+						this.attack_damage+'</span> points';
 					}
 					
 					var table_row = document.querySelectorAll('.HUD')[0].rows[0];	
@@ -61,15 +68,16 @@ Barbarian.prototype.attack = function() {
 				
 				} else {
 					enemy.health -= enemy.attack_damage;
+
 					if(enemy.health < 0) {
 						this.eventObj.attack = 'You hit enemy with your sword, he got worse by: '+
-					'<span style="color:#f00;font-family:Verdana;font-size:20px">'+
-					(this.attack_damage+ enemy.health)+'</span> points';
-				} else {
+						'<span style="color:#f00;font-family:Verdana;font-size:20px">'+
+						(this.attack_damage+ enemy.health)+'</span> points';
+					} else {
 						this.eventObj.attack = 'You hit enemy with your sword, he got worse by: '+ 
-					'<span style="color:#AA0cff;font-family:Verdana;font-size:20px">'+
-					this.attack_damage+'</span> points';
-				}
+						'<span style="color:#AA0cff;font-family:Verdana;font-size:20px">'+
+						this.attack_damage+'</span> points';
+					}
 					var table_row = document.querySelectorAll('.HUD')[1].rows[0];
 					this.hud_changer(table_row, this.attack_damage, enemy.maxhealth, enemy.health);
 				
@@ -86,6 +94,7 @@ Barbarian.prototype.attack = function() {
 
 			
 			var self = this;
+			//Set cooldown
 			setTimeout(function () {self.attack_enabled = 1}, self.attack_cooldown);
 			self.attack_enabled = 0;
 		} else if(this==me) {

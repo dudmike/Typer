@@ -410,10 +410,10 @@ Hero.prototype.reload_changer = function(time, index, duration) {
 	var dividend = duration/Img.offsetHeight;
 	reloader.style.height =  (duration - time)/dividend + 'px';
 }
-
+//Show ditance in the id="dist" block
 Hero.prototype.showDistance = function() {
-	var p = document.getElementById('dist');
-	p.innerHTML ='<b style="font-size:25px">'+ distance +'</b>' ;
+	var distance = document.getElementById('dist');
+	distance.innerHTML ='<b style="font-size:25px">'+ distance +'</b>' ;
 }
 
 Hero.prototype.showEvent = function(prop) {

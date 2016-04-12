@@ -359,15 +359,15 @@ Hero.prototype.end = function() {
 		gameStatus = 0;	
 	}
 }
-
+//Places animation blocks
 Hero.prototype.reloadPlacer = function() {
-	var currentImg = document.body.querySelectorAll('div[id="status_container"] img');
+	var abilityImages = document.body.querySelectorAll('div[id="status_container"] img');
 
-	for(var i=0; i< currentImg.length; i++) {
+	for(var i=0; i< abilityImages.length; i++) {
 		var div = document.createElement('div');
 		div.setAttribute('class', 'ability');
-		div.style.left = this.getCoords(currentImg[i]).left + 'px';
-		div.style.top = this.getCoords(currentImg[i]).top + 'px';
+		div.style.left = this.getCoords(abilityImages[i]).left + 'px';
+		div.style.top = this.getCoords(abilityImages[i]).top + 'px';
 		document.body.appendChild(div);
 	}
 }

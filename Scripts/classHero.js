@@ -17,7 +17,7 @@ Hero.prototype.heal = function() {
 			return this.eventObj.heal = 'Not enough energy for playing doctors';
 		}
 		this.energy -= this.heal_energy_cost;
-
+		//Variable to select HUD table and it's row 
 		var table_row;
 		(this == me) ? table_row = document.querySelectorAll('.HUD')[0].rows[1]:
 		table_row = document.querySelectorAll('.HUD')[1].rows[1];				

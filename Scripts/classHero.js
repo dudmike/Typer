@@ -415,7 +415,8 @@ Hero.prototype.showDistance = function() {
 	var distance = document.getElementById('dist');
 	distance.innerHTML ='<b style="font-size:25px">'+ distance +'</b>' ;
 }
-
+/*Show event in the id="log_container" block
+It takes prop argument, which is property of this.eventObj*/
 Hero.prototype.showEvent = function(prop) {
 	if(!gameStatus) return;
 	var text = prop;
@@ -428,7 +429,7 @@ Hero.prototype.showEvent = function(prop) {
 Hero.prototype.inputClear = function() {
 	input.value = '';
 }
-
+/*Loads commands from the input string(str)*/
 Hero.prototype.strLoader = function(str) {
 	switch(str) {
 	case 'berserk':

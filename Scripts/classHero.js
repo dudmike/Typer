@@ -89,15 +89,22 @@ Hero.prototype.hud_changer = function(tbl_row, dmg, max_val, property) {
 	}, 2000)
 }
 
+/*It takes arguments:
+draw - function that will change values to animate
+duration - duration of animation*/
 Hero.prototype.animate = function(draw, duration) {
+	//Time when animation starts
 	var start = performance.now();
 
 	requestAnimationFrame(function animate(time) {
+		//How much time passed since start
 		var timePassed = time - start;
 
 		if(timePassed > duration) timePassed = duration;
+		//Draw animation in timePassed time
 		draw(timePassed);
 
+		//Plan another frame if it's not end
 		if(timePassed < duration) {
 			requestAnimationFrame(animate);
 		}	

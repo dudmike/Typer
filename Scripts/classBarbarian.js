@@ -106,18 +106,19 @@ Barbarian.prototype.attack = function() {
 		this.showEvent(this.eventObj.attack);
 	}
 }
-
+//Moves player next to enemy(distance=1)
 Barbarian.prototype.berserk = function() {
 	var player2 = document.getElementById('player2');
 	var player1 = document.getElementById('player1');
 	if(this.berserk_enabled) {
 		if(this == me) {
 			if(this.energy == this.berserk_energy_cost) {
-				distance = 1;
-				
+				distance = 1;				
 				this.showDistance();
+				//Deal damage
 				enemy.health -= this.berserk_damage;
 				this.energy -= this.berserk_energy_cost;
+				//Select HUD table row
 				var table = document.querySelectorAll('.HUD')[0].rows[1];
 				this.hud_changer(table, this.berserk_energy_cost, this.maxenergy, this.energy);
 				table = document.querySelectorAll('.HUD')[1].rows[0];
@@ -125,35 +126,37 @@ Barbarian.prototype.berserk = function() {
 				this.eventObj.berserk = 'You rushing forward and attack enemy by:' + 
 				'<span style="color:#AA0cff;font-family:Verdana;font-size:20px">'+
 					this.berserk_damage+' </span> points';
-
+				//Move player1
 				player1.style.left = (this.getCoords(player2).left- this.attackWidth()) + 'px';
 				if(enemy.health <= 0) {
 					this.end();
 					this.eventObj.end = 'You\'re so hard, you rammed your opponent';
 					this.showEvent(this.eventObj.end);				
 				} else this.showEvent(this.eventObj.berserk);
-
+				//Cooldown animation
 				this.animate(function(timePassed) {
 						return me.reload_changer(timePassed, 2, me.berserk_cooldown);
 				}, me.berserk_cooldown)
 
 				var self = this;
+				//Set up cooldown
 				setTimeout(function () {self.berserk_enabled = 1}, self.berserk_cooldown);
 				self.berserk_enabled = 0;
-			} else {
+			} else {//Not enough energy
 				this.eventObj.berserk = 'To activate ability you need: ' +
 				'<span style="color:#00F;font-family:Verdana;font-size:20px">'+ 
 				(this.berserk_energy_cost - this.energy) +'</span> energy points';
 				this.showEvent(this.eventObj.berserk);
 			}
-
+		//Player2
 		} else {
 			if(this.energy == this.berserk_energy_cost) {
-				distance = 1;
-				
+				distance = 1;				
 				this.showDistance();
+				//Deal damage
 				me.health -= this.berserk_damage;
 				this.energy -= this.berserk_energy_cost;
+				//Select HUD table row
 				var table = document.querySelectorAll('.HUD')[1].rows[1];
 				this.hud_changer(table, this.berserk_energy_cost, this.maxenergy, this.energy);
 				table = document.querySelectorAll('.HUD')[0].rows[0];
@@ -161,20 +164,21 @@ Barbarian.prototype.berserk = function() {
 				this.eventObj.berserk = 'Enemy rushing forward and attack you by:' +
 				'<span style="color:#F00;font-family:Verdana;font-size:20px">'+this.berserk_damage+ 
 				'</span> points';
+				//Move player1
 				player2.style.left = this.getCoords(player1).left + this.attackWidth() + 'px';
 				if(me.health <=0) {
 					this.end();
 					this.eventObj.end = 'Your enemy rammed you';
 					this.showEvent(this.eventObj.end);
 				} else this.showEvent(this.eventObj.berserk);
-
+				//Set up cooldown
 				var self = this;
 				setTimeout(function () {self.berserk_enabled = 1}, self.berserk_cooldown);
 				self.berserk_enabled = 0;
 
 			}
 		}
-	} else {
+	} else {//It's on cooldown
 		this.eventObj.berserk ='You can\'t use it so often';
 		this.showEvent(this.eventObj.berserk);
 	}

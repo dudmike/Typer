@@ -372,11 +372,13 @@ Hero.prototype.reloadPlacer = function() {
 	}
 }
 
-Hero.prototype.attackRender = function() {
+Hero.prototype.setAttackBlock = function() {
+	//Create block for attack animation
 	var parentDiv = document.createElement('div');
 	var whiteDiv = document.createElement('div');
 	whiteDiv.setAttribute('class', 'attack_animation_render');
 	parentDiv.appendChild(whiteDiv);
+	//Set up attack block position for players
 	if(this == me) {
 		var player1 = this.getCoords(document.getElementById('player1'));
 		parentDiv.style.left = player1.left + 'px';
@@ -387,7 +389,9 @@ Hero.prototype.attackRender = function() {
 	}		
 	
 	parentDiv.setAttribute('class', 'attack_animation_block');
+	//Add into document
 	document.body.appendChild(parentDiv);
+	//Delete if there are more than 2 blocks
 	if(document.querySelectorAll('.attack_animation_block').length == 2) {
 		document.body.removeChild(document.querySelectorAll('.attack_animation_block')[0]);
 	}

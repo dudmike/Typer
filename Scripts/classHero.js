@@ -359,7 +359,7 @@ Hero.prototype.end = function() {
 		gameStatus = 0;	
 	}
 }
-//Places animation blocks
+//Places animation blocks for abilities
 Hero.prototype.reloadPlacer = function() {
 	var abilityImages = document.body.querySelectorAll('div[id="status_container"] img');
 
@@ -371,7 +371,7 @@ Hero.prototype.reloadPlacer = function() {
 		document.body.appendChild(div);
 	}
 }
-
+//Places attack block and deletes first
 Hero.prototype.setAttackBlock = function() {
 	//Create block for attack animation
 	var parentDiv = document.createElement('div');
@@ -391,19 +391,24 @@ Hero.prototype.setAttackBlock = function() {
 	parentDiv.setAttribute('class', 'attack_animation_block');
 	//Add into document
 	document.body.appendChild(parentDiv);
-	//Delete if there are more than 2 blocks
+	//Delete if there are more than 1 blocks
 	if(document.querySelectorAll('.attack_animation_block').length == 2) {
 		document.body.removeChild(document.querySelectorAll('.attack_animation_block')[0]);
 	}
 }
-
+/*This is draw function for animation method. It takes arguments:
+time - timePassed, take it from the animate method
+index - number of image
+duration - duration of animation*/
 Hero.prototype.reload_changer = function(time, index, duration) {
 	var Img = document.body.querySelectorAll('div[id="status_container"] img')[index];
+	//Select reload block, that is inserted by reloadPlacer method
 	var reloader = document.querySelectorAll('.ability')[index];
+	//Get difference, to view height decrease from top to bottom
 	var difference = Img.offsetHeight - reloader.offsetHeight;
 	reloader.style.top = this.getCoords(Img).top+ difference + window.pageYOffset + 'px';
-	var delimiter = duration/Img.offsetHeight;
-	reloader.style.height =  (duration - time)/delimiter + 'px';
+	var dividend = duration/Img.offsetHeight;
+	reloader.style.height =  (duration - time)/dividend + 'px';
 }
 
 Hero.prototype.showDistance = function() {

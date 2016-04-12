@@ -115,83 +115,85 @@ Hero.prototype.getCoords = function(elem) {
 	return elem.getBoundingClientRect();
 }
 
+/*It moves players, take arguments:
+changeVal - amount of pixels to move.
+It can positive(move player forward) and negative(move backward)*/
 Hero.prototype.positionChange = function(changeVal) {
 	if(distance >= 4 && changeVal > 0) return;
 
-	var player2 = document.getElementById('player2');
-	var player1 = document.getElementById('player1');
-
-	var attackWidth = this.attackWidth(),
-		player1_left = this.getCoords(player1).left,
-		player2_left = this.getCoords(player2).left,
+	var player2 = document.getElementById('player2'),
+	    player1 = document.getElementById('player1'),
 		player1_start_position = this.player1_start_position,
-		player2_start_position = this.player2_start_position,
-		difference = player2_left - player1_left,
-		step = (animation_container.clientWidth - attackWidth - player1.offsetWidth)/ 3;
+		player2_start_position = this.player2_start_position;
 
+	//For the first launch	
 	if(player1.style.left== '' && player2.style.left == '' || distance ==4)	{
 		player1.style.left = player1_start_position;
 		player2.style.left = player2_start_position;
 	}
-		
-	if(this == me) {		
+
+	var attackWidth = this.attackWidth(),
+		player1_left = parseInt(player1.style.left),
+		player2_left = parseInt(player2.style.left),
+		difference = player2_left - player1_left,
+		//Calculation min step, depending of animation_container's clientWidth
+		step = (animation_container.clientWidth - attackWidth - player1.offsetWidth)/ 3;
+
+	if(this == me) {
+		//End target of player1's movement		
 		var position = player1_left + attackWidth  + changeVal;
-		if(position >= parseInt(player2.style.left) ) {
-			player1.style.left = (parseInt(player2.style.left)- attackWidth) + 'px';
-		} else if(player1_left + changeVal < parseInt(player1_start_position)) {
-			
+		//If player1 is going over player2
+		if(position >= player2_left ) {
+			player1.style.left = (player2_left- attackWidth) + 'px';
+		//If player1 is going over his start position
+		} else if(player1_left + changeVal < parseInt(player1_start_position)) {			
 			if(difference >= 2 * step) {
 				player1.style.left = player1_start_position;
-			} else {
+			} else { //If player 2 is too close
 				player1.style.left = (parseInt(player2_start_position)  - difference + changeVal) + 'px';
 				player2.style.left = player2_start_position;	
 			}
-			
+		//When player1 moves from distance=5 to ditance=3	
 		} else if(distance == 3 && changeVal > 0) {
-			player1.style.left = step + 10 + 'px';
-		} 
-
-		else {
-			if(distance ==4) {
+			player1.style.left = step + 10 + 'px';//10 is default body margin
+		} else {
+			if(distance == 4) {
 				player1.style.left = player1_start_position;
 			} else {
-				player1.style.left = parseInt(player1.style.left)  + changeVal + 'px';
+				player1.style.left = player1_left  + changeVal + 'px';
 			}
 			
 		}
-		
-	} else {
-		var position = player2_left - changeVal;
 
-		if(position <= parseInt(player1.style.left) + attackWidth) {
-			player2.style.left = (parseInt(player1.style.left) + attackWidth) + 'px';
+	} else {
+		//End target of player2's movement
+		var position = player2_left - changeVal;
+		//If player2 is going over player1
+		if(position <= player1_left + attackWidth) {
+			player2.style.left = (player1_left + attackWidth) + 'px';
+		//If player1 is going over his start position
 		} else if(player2_left - changeVal > parseInt(player2_start_position)) {
 			
 			if(difference > 2 * step) {
 				
 				player2.style.left = player2_start_position;
-			} else {
-				
+			} else {//If player 1 is too close			
 				player2.style.left = (parseInt(player1_start_position) + difference - changeVal) + 'px';
 				player1.style.left = player1_start_position;
 			}
+		//When player1 moves from distance=5 to ditance=3
 		} else if(distance == 3 && changeVal > 0) {
-		
 			player2.style.left =  parseInt(player2_start_position)-step + 'px';
 		}
 
 		else {
-			
 			if(distance == 4 ) {
 				player2.style.left = player2_start_position;
 			} else {
-				player2.style.left = parseInt(player2.style.left) - changeVal + 'px';
-			}
-			
+				player2.style.left = player2_left - changeVal + 'px';
+			}		
 		}
-	}
-	
-	
+	}	
 }
 
 Hero.prototype.walk = function() {	

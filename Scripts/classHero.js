@@ -22,28 +22,28 @@ Hero.prototype.heal = function() {
 		(this == me) ? table_row = document.querySelectorAll('.HUD')[0].rows[1]:
 		table_row = document.querySelectorAll('.HUD')[1].rows[1];				
 		this.hud_changer(table_row, this.heal_energy_cost, this.maxenergy, this.energy);
-		
-		var hp = this.maxhealth - this.health;
+		var healAmount = this.maxhealth - this.health;
 		this.eventObj.heal = 
 		'You laid hands and got better by: '+
-		'<span style="color:green;font-family:Verdana;font-size:20px">' + hp + '</span> points.';
+		'<span style="color:green;font-family:Verdana;font-size:20px">' + healAmount + '</span> points.';
 
+		//Restore full hp for different classes
 		this.health = (this.classDefiner ==1)? 150: 
 		(this.classDefiner ==2)? 80: 50;
 		var self = this;
 		var table;
 		self == me? table = document.querySelectorAll('.HUD')[0]:
 		table = document.querySelectorAll('.HUD')[1];
-
+		//Fulfill health bar and show numeric amount of health
 		table.rows[0].querySelector('div[class $="bar"]').style.width ='100%';
 		table.querySelectorAll('div[class="num"]')[0].innerHTML = self.maxhealth;
-
+		//Show cooldown
 		this.animate(function(timePassed) {
 			return me.reload_changer(timePassed, 1, 10000);
 		}, 10000)
 
 		
-
+		//Cooldown is set to 10 seconds
 		setTimeout(function() {
 			self.heal_enabled = 1;
 		}, 10000)
@@ -52,15 +52,26 @@ Hero.prototype.heal = function() {
 			 	
 }
 
+/*It changes percentage of hud's width, refreshes numeric amount of health and
+animates damage amount.
+It takes arguments:
+tbl_row - to get hud table and it's row
+dmg - amount of damage to animate
+max_val - maxhealth, maxenergy, maxstamina
+property - health, energy, stamina*/
 Hero.prototype.hud_changer = function(tbl_row, dmg, max_val, property) {
 	if(!gameStatus) return;
+	//Selecting bar
 	var bar = tbl_row.querySelector('div[class $="bar"]');
 	if(me.health <=0 || enemy.health <=0) {
 		bar.style.width = '0%';
 		tbl_row.querySelector('div[class="num"]').innerHTML = 0;			
 	} else {
+		//Calculate current property percentage of max value
 		var percentage =   property*100/ max_val;
+		//Change bar's width
 		bar.style.width = percentage + '%';
+		//Show numeric amount of property
 		tbl_row.querySelector('div[class="num"]').innerHTML = Math.round(property);
 	}
 
@@ -68,12 +79,11 @@ Hero.prototype.hud_changer = function(tbl_row, dmg, max_val, property) {
 		if(property < 0) {
 			tbl_row.querySelector('div[class="animated"]').innerHTML = '-' + (dmg + property);
 		} else {
-
 			tbl_row.querySelector('div[class="animated"]').innerHTML = '-' + dmg;
 		}
 	}
 	
-	
+	//Animate damage amount
 	this.animate(function(timePassed) {
 		tbl_row.querySelector('div[class="animated"]').style.opacity = (2000  -  timePassed)/1000 + '';
 	}, 2000)

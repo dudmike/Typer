@@ -24,7 +24,7 @@ Barbarian.prototype.attack = function() {
 	if(!gameStatus) return;
 	if(this.stamina >= this.attack_stamina_cost) {
 		if(this.attack_enabled) {
-			this.attackRender();
+			this.setAttackBlock();
 			if(this == me) {
 				this.animate(function(timePassed) {
 					return me.reload_changer(timePassed, 0, me.attack_cooldown);

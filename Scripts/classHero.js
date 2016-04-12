@@ -412,8 +412,8 @@ Hero.prototype.reload_changer = function(time, index, duration) {
 }
 //Show ditance in the id="dist" block
 Hero.prototype.showDistance = function() {
-	var distance = document.getElementById('dist');
-	distance.innerHTML ='<b style="font-size:25px">'+ distance +'</b>' ;
+	var dist = document.getElementById('dist');
+	dist.innerHTML ='<b style="font-size:25px">'+ distance +'</b>' ;
 }
 /*Show event in the id="log_container" block
 It takes prop argument, which is property of this.eventObj*/
@@ -461,7 +461,7 @@ Hero.prototype.strLoader = function(str) {
 	 me.inputClear();
 	}	
 }
-
+/*Creates and inserts into document block to read Width*/
 Hero.prototype.attackWidth = function() {
 	var div = document.createElement('div');
 	div.setAttribute('class', 'attack_animation_render');

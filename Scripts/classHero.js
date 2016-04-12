@@ -195,17 +195,17 @@ Hero.prototype.positionChange = function(changeVal) {
 		}
 	}	
 }
-
+//Move forward
 Hero.prototype.walk = function() {	
 	distance--;
-	this.showDistance();
+	this.showDistance();//Display distance
 	if(distance < 1) {
 		distance = 1;
 		this.showDistance();
 	}
-	this.positionChange(257);
+	this.positionChange(257);//Move player
 }
-
+//Double walk
 Hero.prototype.dash = function() {		
 	distance--;
 	distance--;
@@ -222,7 +222,7 @@ Hero.prototype.dash = function() {
 	}
 	this.positionChange(514);
 }
-
+//Double step backward
 Hero.prototype.run = function() {
 	distance++;
 	distance++;
@@ -234,13 +234,13 @@ Hero.prototype.run = function() {
 	this.hud_changer(table_row, 25, this.maxstamina, this.stamina);
 	this.positionChange(-514);
 }
-
+//Step backward
 Hero.prototype.back = function() {
 	distance++;
 	this.showDistance();
 	this.positionChange(-257);
 }
-
+//Regenerate all bar's width
 Hero.prototype.regeneration = function() {
 	if(gameStatus != 1) return;
 

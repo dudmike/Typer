@@ -472,11 +472,11 @@ Hero.prototype.attackWidth = function() {
 	document.body.removeChild(document.body.lastChild);
 	return Width;
 }
-
+//Random value for array index
 Hero.prototype.getIntegerRandom = function(max) {
 	return Math.floor(Math.random() * (max+1) );
 }
-
+//Random value for time interval
 Hero.prototype.getTimeRandom = function(min, max) {
 	return min + Math.random() *(max-min);
 }

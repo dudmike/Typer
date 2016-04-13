@@ -5,7 +5,7 @@ function Barbarian() {
 	this.energy = 50;
 	this.stamina = 200;
 	this.attack_damage = 50;
-	this.attack_stamina_cost = 50;
+	this.attack_stamina_cost = 25;
 	this.attack_enabled = 1;
 	this.attack_cooldown = 3000;
 	this.berserk_cooldown = 30000;

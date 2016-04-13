@@ -184,7 +184,7 @@ Barbarian.prototype.berserk = function() {
 	}
 
 }
-
+//Loads auto control of player
 Barbarian.prototype.bot = function() {
 	var time = enemy.getTimeRandom(1000, 3000);
 	var self = this;
@@ -198,21 +198,24 @@ Barbarian.prototype.bot = function() {
 		setTimeout(self.bot.bind(self), time);
 	}
 }
-
+//Loads Interval, that checks danger situations
 Barbarian.prototype.react_on_danger = function() {
 	setInterval(function() {
+		//If health below 30%
 		if(enemy.health <= enemy.maxhealth * 30/100 ) {
 			if(enemy.heal_enabled && enemy.stamina >= this.run_stamina_cost) {
 				this.commands=[enemy.heal.bind(enemy),enemy.heal.bind(enemy),enemy.run.bind(enemy),
 				enemy.run.bind(enemy),enemy.heal.bind(enemy)];
 				this.commands[enemy.getIntegerRandom(this.commands.length-1)]();
+			//Heal on cooldown
 			} else if(!enemy.heal_enabled && enemy.stamina >= run_stamina_cost){
 				this.commands=[enemy.run.bind(enemy), enemy.run.bind(enemy),enemy.back.bind(enemy)];
 				this.commands[enemy.getIntegerRandom(this.commands.length-1)]();
+			//No stamina 	
 			} else {
 				enemy.heal.bind(enemy);
 			}
-			
+		//Enemy is too close	
 		} else {
 			if(distance ==1) {
 				if(enemy.attack_enabled ) {

@@ -1,6 +1,6 @@
 # Typer
-To control your character you need to type commands in input element<br>
-List of commands:
+To control your character you need to type commands on input element<br>
+List of commands:<br>
 -walk(step forward)<br>
 -back(step back)<br>
 -run(2 steps back)<br>
